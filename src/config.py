@@ -1,7 +1,7 @@
 import os
 import dotenv
 
-ENV_FILE = "local.env"
+ENV_FILE = "../config/local.env"
 
 if os.path.exists(ENV_FILE):
     dotenv.load_dotenv(ENV_FILE)

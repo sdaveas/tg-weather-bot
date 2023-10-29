@@ -34,7 +34,9 @@ jobs:
         pipenv install --deploy --ignore-pipfile
 
     - name: Run forecast.py using Pipenv
-      run: pipenv run python forecast.py
+      run: |
+        cd src
+        pipenv run python job.py
       env:
         TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
         TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}

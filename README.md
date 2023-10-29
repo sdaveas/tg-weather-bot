@@ -20,7 +20,8 @@ pipenv install
 
 ```
 pipenv shell # skip if you just ran `pipenv install`
-python3 forecast.py [--dry-run]
+cd src
+python job.py [--dry-run]
 ```
 
 # Results
