@@ -16,7 +16,6 @@ OW_API_KEY = os.getenv("OW_API_KEY")
 # Google Calendar
 GC_API_KEY = os.getenv("GC_API_KEY")
 GC_ID = os.getenv("GC_ID")
-GC_EVENT_KEYWORDS = os.getenv("GC_EVENT_KEYWORDS")
 GC_TIMEDELTA_HOURS = os.getenv("GC_TIMEDELTA_HOURS")
 
 # Location

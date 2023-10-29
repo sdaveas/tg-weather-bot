@@ -1,0 +1,47 @@
+name: Daily Weather Forecast
+
+on:
+  schedule:
+    # Runs every hour
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+jobs:
+  forecast:
+    runs-on: ubuntu-latest
+    environment: API_KEYS
+
+    steps:
+    - name: Echo variables
+      run: |
+        echo hours: ${{ vars.GC_TIMEDELTA_HOURS }}
+        echo lat: ${{ vars.LAT }}
+        echo lon: ${{ vars.LON }}
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.11 
+
+    - name: Install Pipenv
+      run: pip install pipenv
+
+    - name: Install dependencies using Pipenv
+      run: |
+        pipenv install --deploy --ignore-pipfile
+
+    - name: Run forecast.py using Pipenv
+      run: pipenv run python forecast.py
+      env:
+        TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+        TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+        OW_API_KEY: ${{ secrets.OW_API_KEY }}
+        GC_API_KEY: ${{ secrets.GC_API_KEY }}
+        GC_ID: ${{ secrets.GC_ID }}
+        GC_TIMEDELTA_HOURS: ${{ vars.GC_TIMEDELTA_HOURS }}
+        LAT: ${{ vars.LAT }}
+        LON: ${{ vars.LON }}
+
