@@ -1,6 +1,4 @@
-from apscheduler.schedulers.blocking import BlockingScheduler
 from googleapiclient.discovery import build
-from google.oauth2 import service_account
 from datetime import datetime, timedelta
 import config
 
