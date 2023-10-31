@@ -5,6 +5,11 @@ on:
     # Runs every hour
     - cron: '0 * * * *'
   workflow_dispatch:
+    inputs:
+      timedelta_hours: 
+        type: string
+        description: Look into future for this many hours
+        required: false
 
 jobs:
   forecast:
@@ -14,9 +19,10 @@ jobs:
     steps:
     - name: Echo variables
       run: |
-        echo hours: ${{ vars.GC_TIMEDELTA_HOURS }}
-        echo lat: ${{ vars.LAT }}
-        echo lon: ${{ vars.LON }}
+        echo hours override: [${{ inputs.timedelta_hours }}]
+        echo config hours: [${{ vars.GC_TIMEDELTA_HOURS }}]
+        echo config lat: [${{ vars.LAT }}]
+        echo config lon: [${{ vars.LON }}]
 
     - name: Checkout repository
       uses: actions/checkout@v2
@@ -35,6 +41,10 @@ jobs:
 
     - name: Run forecast.py using Pipenv
       run: |
+        if [ "${{ inputs.timedelta_hours }}" ]; then
+          export GC_TIMEDELTA_HOURS=${{ inputs.timedelta_hours }}
+        fi
+
         cd src
         pipenv run python job.py
       env:
