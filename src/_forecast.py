@@ -2,8 +2,8 @@ import requests
 import config
 
 
-def get_weather_forecast(lat, lon):
-    base_url = "http://api.openweathermap.org/data/2.5/weather"
+def get_weather_forecasts(lat, lon):
+    base_url = "http://api.openweathermap.org/data/2.5/forecast"
 
     params = {
         "lat": f"{lat}",
@@ -20,14 +20,20 @@ def get_weather_forecast(lat, lon):
     return response.json()
 
 
-def format_weather_message(event, forecast):
-    temperature = forecast["main"]["temp"]
+def bad_weather(forecasts):
+    description = forecasts[0]["weather"][0]["description"]
+    return "rain" in description or "thunderstorm" in description or "snow" in description
+
+
+def format_weather_message(event, forecasts):
+    forecast = forecasts.list[0]
     temperature_feel = forecast["main"]["feels_like"]
     humidity = forecast["main"]["humidity"]
     description = forecast["weather"][0]["description"]
 
+    summary = event["summary"]
     location = event["location"] if event["location"] != "" else "Athens"
 
-    message = f"Weather forecast for {location}:\n\n Temperature: {temperature}°C - feels like {temperature_feel}°C\n Humidity: {humidity}%\n Description: {description}"
+    message = f"Weather forecast for {summary} in {location}:\n\n Temperature: {temperature}°C - feels like {temperature_feel}°C\n Humidity: {humidity}%\n Description: {description}"
 
     return message
