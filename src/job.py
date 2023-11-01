@@ -27,7 +27,7 @@ def main():
         return
 
     if dry_run:
-        print(events[0], message)
+        print(message)
         return
 
     asyncio.run(send_message_forecast(message))
