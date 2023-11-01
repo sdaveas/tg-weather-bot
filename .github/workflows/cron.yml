@@ -3,7 +3,7 @@ name: Daily Weather Forecast
 on:
   schedule:
     # Runs every hour
-    - cron: '0 * * * *'
+    - cron: '0 */3 * * *'
   workflow_dispatch:
     inputs:
       timedelta_hours: 
