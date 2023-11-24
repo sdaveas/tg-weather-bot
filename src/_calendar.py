@@ -28,12 +28,14 @@ def get_calendar_events():
     )
 
     events = events_result.get("items", [])
+    print("event:", events[0])
+
     for event in events:
         matching_events.append(
             {
-                "summary": event["summary"],
+                "summary": event.get("summary"),
                 "start": event["start"].get("dateTime", event["start"].get("date")),
-                "location": event["location"],
+                "location": event.get("location", ""),
             }
         )
 
