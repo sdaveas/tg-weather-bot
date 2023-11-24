@@ -34,7 +34,7 @@ def get_closest_forecast(forecasts, event_time):
 
     closest_forecast = forecasts["list"][0]
     for forecast in forecasts["list"]:
-       if forecast["dt"] + 3 * 60 * 60 >= event_unix_timestamp:
+        if forecast["dt"] + 3 * 60 * 60 >= event_unix_timestamp:
             closest_forecast = forecast
             break
 
