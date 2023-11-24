@@ -3,7 +3,7 @@ import sys
 import config
 
 from _calendar import get_calendar_events
-from _forecast import get_weather_forecasts, format_weather_message, bad_weather
+from _forecast import get_weather_forecasts, format_weather_message, bad_weather, get_closest_forecast
 from _telegram import send_message_forecast
 
 
@@ -17,9 +17,10 @@ def main():
         print("No events found")
         return
     
+    forecasts = get_weather_forecasts(config.LAT, config.LON)
+    closest_forecast = get_closest_forecast(forecasts, events[0]["start"])
 
-    forecast = get_weather_forecasts(config.LAT, config.LON)
-    message = format_weather_message(events[0], forecast)
+    message = format_weather_message(events[0], closest_forecast)
 
     if not bad_weather(message):
         print("today it's a good weather, skipping publishing message")
