@@ -28,7 +28,8 @@ def get_calendar_events():
     )
 
     events = events_result.get("items", [])
-    print("event:", events[0])
+    if len(events) > 0:
+        print("event:", events[0])
 
     for event in events:
         matching_events.append(
